@@ -27,6 +27,17 @@ namespace wls
 
 		return std::string();
 	}
+
+	static void _report_last_error(std::string const& message)
+	{
+		DWORD errorCode = ::GetLastError();
+		if (errorCode)
+		{
+			OutputDebugString(message.c_str());
+			OutputDebugString(_get_last_error_string(errorCode).c_str());
+			OutputDebugString("\n");
+		}
+	}
 	
 	Service::Service(std::string const& appName) : _appName(appName)
 	{
@@ -44,22 +55,20 @@ namespace wls
 				err = ::RegSetValueEx(_key, "TypesSupported", 0, REG_DWORD, reinterpret_cast<BYTE const*>(&typesSupported), sizeof(typesSupported));
 
 				if (ERROR_SUCCESS != err)
-					std::cerr << "Failed to install source: " << _get_last_error_string(err) << std::endl;
+					_report_last_error("Failed to install source: ");
 				
 				::RegCloseKey(_key);
 			}
 		}
 		else
-		{
-			std::cerr << "Failed to install source: " << _get_last_error_string(err) << std::endl;
-		}
+			_report_last_error("Failed to install source: ");
 	}
 
 	Service::~Service()
 	{
 		DWORD err = ::RegDeleteKey(HKEY_LOCAL_MACHINE, _keyPath.c_str());
 		if (ERROR_SUCCESS != err)
-			std::cerr << "Failed to install source: " << _get_last_error_string(err) << std::endl;
+			_report_last_error("Failed to install source: ");
 	}
 
 	void Service::logInformation(std::string message)
@@ -85,16 +94,11 @@ namespace wls
 		{
 			auto text = message.c_str();
 			if (FALSE == ::ReportEvent(hEventLog, type, 0, eventID, nullptr, 1, 0, &text, 0))
-			{
-				std::cerr << "Failed to write message: " << _get_last_error_string(::GetLastError()) << std::endl;
-			}
-
+				_report_last_error("Failed to write message: ");
 
 			::DeregisterEventSource(hEventLog);
 		}
 		else
-		{
-			std::cerr << "Failed open source '" << _appName << "': " << _get_last_error_string(::GetLastError()) << std::endl;
-		}
+			_report_last_error("Failed to open source");
 	}
 } // namespace wls
