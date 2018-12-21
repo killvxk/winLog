@@ -26,7 +26,7 @@ namespace wls
 		void _log(std::string const& message, WORD type, DWORD eventID);
 	
 	private:
-		std::string const& _appName;
+		std::string const _appName;
 		std::string _keyPath;
 		HKEY _key{ nullptr };
 	};

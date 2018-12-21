@@ -83,9 +83,11 @@ namespace wls
 
 		if (hEventLog)
 		{
-			LPCTSTR text = message.c_str();
-			if (!::ReportEvent(hEventLog, type, 0, eventID, 0, 1, 0, &text, 0))
+			auto text = message.c_str();
+			if (FALSE == ::ReportEvent(hEventLog, type, 0, eventID, nullptr, 1, 0, &text, 0))
+			{
 				std::cerr << "Failed to write message: " << _get_last_error_string(::GetLastError()) << std::endl;
+			}
 
 
 			::DeregisterEventSource(hEventLog);
