@@ -10,7 +10,7 @@ int APIENTRY WinMain(HINSTANCE instance, [[maybe_unused]] HINSTANCE prevInstance
 
 	if (window.create(cmdShow))
 	{
-		window.logInformation("Hello Jamie.");
+		window.logInformation(42, "Hello Jamie.", 1.0f);
 		return window.run() ? 0 : 1;
 	}
 	
