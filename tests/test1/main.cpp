@@ -4,7 +4,7 @@
 
 #include "window.hpp"
 
-int APIENTRY WinMain(HINSTANCE instance, [[maybe_unused]] HINSTANCE prevInstance, [[maybe_unused]] LPSTR cmdLine, int cmdShow)
+int APIENTRY WinMain(HINSTANCE instance, HINSTANCE, [[maybe_unused]] LPSTR cmdLine, int cmdShow)
 {
 	Window window(instance);
 

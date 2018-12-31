@@ -2,21 +2,19 @@
 # Copyright (c) 2018 Jamie Kenyon. All Rights Reserved.
 #
 
+
 # Add the executable.
-add_executable(test1 WIN32
+add_executable(test2
 	main.cpp
-	win32api.hpp
-	window.hpp
-	window.cpp
 )
 
 # Add library dependencies.
-target_link_libraries(test1
+target_link_libraries(test2
 	PRIVATE
 		winLogService
 )
 
 add_test(
-	NAME BasicWindow
-	COMMAND test1
+	NAME BasicConsole
+	COMMAND test2
 )

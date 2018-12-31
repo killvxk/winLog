@@ -21,7 +21,7 @@ static LRESULT CALLBACK _wndProc(HWND wnd, UINT message, WPARAM wParam, LPARAM l
 	return 0;
 }
 
-Window::Window(HINSTANCE instance) : _instance(instance), Service("MyTestApp")
+Window::Window(HINSTANCE instance) : _instance(instance), Service("Test1")
 {
 }
 
